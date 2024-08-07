@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
+    "module": "NodeNext",                                /* Specify what module code is generated. */
+    "forceConsistentCasingInFileNames": true,            /* Ensure that casing is correct in imports. */
+    "strict": true,                                      /* Enable all strict type-checking options. */
+    "outDir": "dist",
+    "sourceMap": true,                                   /* Create source map files for emitted JavaScript files. */
+    "skipLibCheck": true                                 /* discord and node types would clash :((*/
+  },
+  
+}
