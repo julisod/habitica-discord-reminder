@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc -w",
-    "start": "node --watch dist/index.js"
+    "start": "node --watch dist/index.js",
+    "style": "prettier -c .",
+    "style:fix": "prettier -w ."
   },
   "author": "",
   "license": "ISC",
@@ -17,6 +19,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.1.0",
+    "prettier": "3.3.3",
     "typescript": "^5.5.4"
-  } 
+  }
 }
