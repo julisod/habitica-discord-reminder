@@ -21,12 +21,11 @@ client.once("ready", (readyClient) => {
   console.log(`Ready! Logged in as ${readyClient.user.tag}`);
 });
 
-
 // Gathering slash commands
 const commandFoldersPath = "./src/commands";
 const commandFiles = fs
-.readdirSync(commandFoldersPath)
-.filter((file: string) => file.endsWith(".ts"));
+  .readdirSync(commandFoldersPath)
+  .filter((file: string) => file.endsWith(".ts"));
 
 client.commands = new Collection();
 let commandsArray = [];
