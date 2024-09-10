@@ -2,6 +2,9 @@ import * as dotenv from "dotenv";
 import { Client, GatewayIntentBits, Routes, Collection } from "discord.js";
 import { REST } from "@discordjs/rest";
 import * as fs from "node:fs";
+import { fileURLToPath } from "node:url";
+import path from "node:path";
+import { Command } from "./discord.js";
 
 dotenv.config();
 const { BOT_TOKEN, CLIENT_ID, GUILD_ID } = process.env;
@@ -22,25 +25,41 @@ client.once("ready", (readyClient) => {
 });
 
 // Gathering slash commands
-const commandFoldersPath = "./src/commands";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const commandFoldersPath = path.join(__dirname, "commands");
 const commandFiles = fs
   .readdirSync(commandFoldersPath)
-  .filter((file: string) => file.endsWith(".ts"));
+  .filter((file: string) => file.endsWith(".js"));
 
 client.commands = new Collection();
-let commandsArray = [];
+let commandArray: Command[] = [];
+
+// It would make sense for this to be async, but it works better without it for some reason
+for (const file of commandFiles) {
+  const command = await import(`./commands/${file}`);
+
+  if ("data" in command && "execute" in command) {
+    client.commands.set(command.data.name, command);
+    commandArray.push(command.data.toJSON());
+  } else {
+    console.log(
+      `The command is missing a required "data" or "execute" property.`,
+    );
+  }
+}
 
 // Refreshing guild commands
 (async () => {
   try {
-    /* const data = await rest.put(
+    const data: any = await rest.put(
       Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID),
       { body: commandArray },
     );
-    
+
     console.log(
       `Successfully reloaded ${data.length} application (/) commands.`,
-    ); */
+    );
   } catch (error) {
     console.error(error);
   }

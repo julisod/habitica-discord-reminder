@@ -1,6 +1,6 @@
-import { ChatInputCommandInteraction, Collection } from "discord.js";
+import { Collection, ChatInputCommandInteraction } from "discord.js";
 
-interface Command {
+export interface Command {
   data: {
     name: string;
     description: string;
