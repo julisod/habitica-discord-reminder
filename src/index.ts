@@ -18,12 +18,6 @@ const rest = new REST({ version: "10" }).setToken(BOT_TOKEN);
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
-// readyClient is same as client, but just assumes client is true (for types)
-// You could also use event enums instead of strings
-client.once("ready", (readyClient) => {
-  console.log(`Ready! Logged in as ${readyClient.user.tag}`);
-});
-
 // Gathering slash commands
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -46,6 +40,22 @@ for (const file of commandFiles) {
     console.log(
       `The command is missing a required "data" or "execute" property.`,
     );
+  }
+}
+
+// Event handling
+// You could also use event enums instead of strings
+const eventsPath = path.join(__dirname, "events");
+const eventFiles = fs
+  .readdirSync(eventsPath)
+  .filter((file) => file.endsWith(".js"));
+
+for (const file of eventFiles) {
+  const event = await import(`./events/${file}`);
+  if (event.once) {
+    client.once(event.name, (...args) => event.execute(...args));
+  } else {
+    client.on(event.name, (...args) => event.execute(...args));
   }
 }
 
