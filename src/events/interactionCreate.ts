@@ -28,14 +28,16 @@ export const execute = async (interaction: Interaction) => {
     // Buttons
   } else if (interaction.isButton()) {
     if (interaction.customId.slice(0, 4) !== "done") return;
+    interaction.deferReply({ ephemeral: true });
     const taskId = interaction.customId.slice(5);
-    const response = await markAsDone(taskId);
-    // todo: handle response
-    /* if (response.success) {
-      //reply with some info, then delete original message
-      interaction.reply("yippe")
-    } else {
-      interaction.reply(response.message)
-    } */
+
+    try {
+      await markAsDone(taskId);
+      await interaction.followUp("Yippee");
+      // Deleting the reminder after the task is completed
+      await interaction.message.delete();
+    } catch (error: any) {
+      await interaction.followUp(`${error.name}: ${error.message}`);
+    }
   }
 };

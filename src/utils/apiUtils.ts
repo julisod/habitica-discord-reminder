@@ -18,12 +18,12 @@ export const markAsDone = async (taskId: string) => {
   return fetch(`https://habitica.com/api/v3/tasks/${taskId}/score/up`, {
     method: "POST",
     headers: headers,
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      return data;
-    })
-    .catch((error) => console.error(error));
+  }).then((response) => {
+    if (response.ok) return;
+    throw new Error(
+      `Request failed with status ${response.status} (${response.statusText})`,
+    );
+  });
 };
 
 export const checkIfDone = async (taskId: string): Promise<boolean> => {
