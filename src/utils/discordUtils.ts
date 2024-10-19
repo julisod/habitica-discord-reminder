@@ -7,6 +7,7 @@ import {
   EmbedBuilder,
 } from "discord.js";
 import * as dotenv from "dotenv";
+import { getTaskById } from "./helpers.js";
 
 export const sendReminderMessage = async (taskId: string, client: Client) => {
   const doneButton = new ButtonBuilder()
@@ -14,11 +15,12 @@ export const sendReminderMessage = async (taskId: string, client: Client) => {
     .setLabel("Done")
     .setStyle(ButtonStyle.Success);
 
-  // todo: use real data
+  const task = getTaskById(taskId);
+
   const embed = new EmbedBuilder()
     .setColor("#d4ae85")
-    .setTitle("Test task")
-    .setDescription("🤠");
+    .setTitle(task.name)
+    .setDescription(task.emoji);
 
   const row = new ActionRowBuilder<ButtonBuilder>().addComponents(doneButton);
 
