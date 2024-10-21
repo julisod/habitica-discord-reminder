@@ -5,6 +5,7 @@ import * as fs from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { Command } from "./discord.js";
+import { createCronJobs } from "./cron.js";
 
 dotenv.config();
 const { BOT_TOKEN, CLIENT_ID, GUILD_ID } = process.env;
@@ -76,3 +77,5 @@ for (const file of eventFiles) {
 })();
 
 client.login(BOT_TOKEN);
+
+createCronJobs(client);
