@@ -6,6 +6,8 @@ Habitica is a gamified habit tracker, which I mostly use on my PC. Habitica does
 
 There’s a json file with all of the dailies that need a reminder, with the time that the reminder should be scheduled for. At the scheduled time the program first sends an API request to Habitica to figure out if the task is completed yet. If it hasn’t, it sends a reminder to Discord. When the user clicks the button, it sends out another request to Habitica to mark the daily as done.
 
+![2024-11-02 21_03_03-Discord](https://github.com/user-attachments/assets/c32bdb18-a352-4f2e-8ca0-8cab7183387f)
+
 ## Future development
 
 Right now all of the tasks are in a json file where I have to add them manually in the correct format, but I would love to have a slash command on Discord that can add new reminders, as well as a command that lets me edit them.
