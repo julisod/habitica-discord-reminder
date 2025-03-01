@@ -18,7 +18,6 @@ export const createCronJobs = (client: Client) => {
           }
         } catch (error) {
           console.log(error);
-          await sendReminderMessage(task.taskId, client);
         }
       },
       null,
