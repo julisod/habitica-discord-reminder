@@ -11,3 +11,4 @@ build/
 
 # Project specific
 tasks.json
+test
