@@ -28,7 +28,7 @@ export const execute = async (interaction: Interaction) => {
     // Buttons
   } else if (interaction.isButton()) {
     if (interaction.customId.slice(0, 4) !== "done") return;
-    interaction.deferReply({ ephemeral: true });
+    await interaction.deferReply({ ephemeral: true });
     const taskId = interaction.customId.slice(5);
 
     try {
