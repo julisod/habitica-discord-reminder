@@ -41,3 +41,19 @@ export const checkIfDone = async (taskId: string): Promise<boolean> => {
     })
     .then((data) => data.data.completed);
 };
+
+export const fetchAllDailies = async (): Promise<Daily[]> => {
+  return fetch(`https://habitica.com/api/v3/tasks/user?type=dailys`, {
+    method: "GET",
+    headers: headers,
+  })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error(
+        `Request failed with status ${response.status}: ${response.statusText}`,
+      );
+    })
+    .then((data) => data.data);
+};
